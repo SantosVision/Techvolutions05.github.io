@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="description" content="Walk Willow Hall in Lumenstep — living, kitchen, bedroom, and bath." />
+  <title>Willow Hall tour · Lumenstep</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%232d4a3e' width='32' height='32' rx='6'/%3E%3Cpath fill='%23e8d5a3' d='M8 22V14l8-6 8 6v8h-5v-5h-6v5z'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/tour.css" />
+</head>
+<body>
+  <div id="webgl-error" class="webgl-error" hidden>
+    <p>This tour needs WebGL. Try a current browser, or go back to the <a href="./">Lumenstep home</a>.</p>
+  </div>
+
+  <div id="app">
+    <canvas id="view" aria-label="Willow Hall 3D walkthrough"></canvas>
+
+    <header class="hud-top">
+      <a class="wordmark" href="./">Lumenstep</a>
+      <div class="room-now">
+        <span class="room-label" id="room-label">Living Room</span>
+        <span class="room-blurb" id="room-blurb">South-facing parlor with a plaster hearth.</span>
+      </div>
+      <button type="button" class="icon-btn" id="btn-help" aria-label="How to look around">?</button>
+    </header>
+
+    <div id="hotspots" class="overlay-layer"></div>
+    <div id="pins" class="overlay-layer"></div>
+
+    <aside class="minimap" aria-label="Floor plan">
+      <button type="button" data-room="living" class="mm living is-here">Living</button>
+      <button type="button" data-room="kitchen" class="mm kitchen">Kitchen</button>
+      <button type="button" data-room="bedroom" class="mm bedroom">Bedroom</button>
+      <button type="button" data-room="bathroom" class="mm bathroom">Bath</button>
+    </aside>
+
+    <div class="hint" id="hint">Drag to look · tap a doorway to step through</div>
+
+    <nav class="room-dock" aria-label="Rooms">
+      <button type="button" data-room="living" class="chip is-here">Living</button>
+      <button type="button" data-room="kitchen" class="chip">Kitchen</button>
+      <button type="button" data-room="bedroom" class="chip">Bedroom</button>
+      <button type="button" data-room="bathroom" class="chip">Bath</button>
+    </nav>
+
+    <div class="joystick" id="joystick" hidden>
+      <div class="joystick-knob" id="joystick-knob"></div>
+    </div>
+
+    <div class="pin-card" id="pin-card" hidden>
+      <p class="pin-kicker" id="pin-kicker"></p>
+      <h2 id="pin-title"></h2>
+      <p id="pin-body"></p>
+      <button type="button" class="pin-close" id="pin-close">Close</button>
+    </div>
+  </div>
+
+  <div class="veil" id="veil" aria-hidden="true"></div>
+
+  <dialog class="help" id="help">
+    <h2>Finding your way</h2>
+    <ul>
+      <li><strong>Look</strong> — drag on the screen, or move the mouse after clicking the view.</li>
+      <li><strong>Walk</strong> — WASD or arrow keys on a keyboard; use the stick on a phone.</li>
+      <li><strong>Rooms</strong> — tap glowing doorway labels, the floor plan, or the chips below.</li>
+      <li><strong>Pins</strong> — the dotted markers open a short note about what’s in the room.</li>
+    </ul>
+    <form method="dialog"><button class="btn" value="ok">Start walking</button></form>
+  </dialog>
+
+  <div class="loader" id="loader">
+    <p class="loader-mark">Lumenstep</p>
+    <p>Opening Willow Hall…</p>
+  </div>
+
+  <script src="vendor/three.min.js"></script>
+  <script src="js/tour.js"></script>
+</body>
+</html>

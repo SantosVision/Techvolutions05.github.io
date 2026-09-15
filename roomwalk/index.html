@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="Lumenstep — walk a home in your browser. A free demo walkthrough of Willow Hall." />
+  <title>Lumenstep — Walk the house in your browser</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%232d4a3e' width='32' height='32' rx='6'/%3E%3Cpath fill='%23e8d5a3' d='M8 22V14l8-6 8 6v8h-5v-5h-6v5z'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,650;1,9..144,500&family=Outfit:wght@380;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/landing.css" />
+</head>
+<body>
+  <a class="skip" href="#tour-cta">Skip to tour</a>
+
+  <header class="site-bar">
+    <a class="wordmark" href="./">
+      <span class="mark" aria-hidden="true"></span>
+      Lumenstep
+    </a>
+    <nav class="bar-nav" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#rooms">Rooms</a>
+      <a href="tour.html" class="bar-cta">Enter the tour</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Browser walkthrough · Willow Hall sample home</p>
+      <h1>Open the door.<br /><em>Walk the house.</em></h1>
+      <p class="lede">
+        Lumenstep is a free, in-browser home tour — no app, no headset, no scan subscription.
+        Step through four connected rooms of a sample craftsman bungalow, peek at details, and
+        hop doorways with a tap.
+      </p>
+      <div class="hero-actions" id="tour-cta">
+        <a class="btn btn-primary" href="tour.html">Enter the tour</a>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
+      </div>
+      <p class="fineprint">Works on phones and desktops. Drag to look around. Zero account required.</p>
+    </section>
+
+    <section class="stage" aria-label="Willow Hall floor plan">
+      <div class="plan-card">
+        <div class="plan-meta">
+          <span>Willow Hall</span>
+          <span>1,240 sq ft · sample listing</span>
+        </div>
+        <div class="plan" role="img" aria-label="Four-room floor plan: living, kitchen, bedroom, bathroom">
+          <a class="cell living" href="tour.html#living">
+            <span class="cell-kicker">01</span>
+            <strong>Living</strong>
+            <span class="furn sofa" aria-hidden="true"></span>
+            <span class="furn table" aria-hidden="true"></span>
+            <span class="furn hearth" aria-hidden="true"></span>
+          </a>
+          <a class="cell kitchen" href="tour.html#kitchen">
+            <span class="cell-kicker">02</span>
+            <strong>Kitchen</strong>
+            <span class="furn island" aria-hidden="true"></span>
+            <span class="furn counters" aria-hidden="true"></span>
+          </a>
+          <a class="cell bedroom" href="tour.html#bedroom">
+            <span class="cell-kicker">03</span>
+            <strong>Bedroom</strong>
+            <span class="furn bed" aria-hidden="true"></span>
+          </a>
+          <a class="cell bath" href="tour.html#bathroom">
+            <span class="cell-kicker">04</span>
+            <strong>Bath</strong>
+            <span class="furn tub" aria-hidden="true"></span>
+            <span class="furn vanity" aria-hidden="true"></span>
+          </a>
+          <span class="door d-ns" aria-hidden="true"></span>
+          <span class="door d-ew" aria-hidden="true"></span>
+          <span class="door d-ns-2" aria-hidden="true"></span>
+          <span class="door d-ew-2" aria-hidden="true"></span>
+        </div>
+        <p class="plan-hint">Tap a room on the plan to land there.</p>
+      </div>
+    </section>
+
+    <section class="how" id="how">
+      <h2>How a Lumenstep tour works</h2>
+      <ol class="steps">
+        <li>
+          <span class="num">1</span>
+          <h3>Look around</h3>
+          <p>Drag (or use a mouse) to pan. On a keyboard, WASD walks you through the connected rooms.</p>
+        </li>
+        <li>
+          <span class="num">2</span>
+          <h3>Step through doorways</h3>
+          <p>Glowing hotspots mark every opening. Tap one — or the room chips — to cross the threshold.</p>
+        </li>
+        <li>
+          <span class="num">3</span>
+          <h3>Read the house</h3>
+          <p>Info pins call out materials and moments, the way a listing tour would on a walk-through.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="rooms" id="rooms">
+      <h2>Four rooms, one path</h2>
+      <div class="room-grid">
+        <article>
+          <h3>Living room</h3>
+          <p>A plaster hearth, linen sofa, and south light. The house’s gathering room — doors to kitchen and bedroom.</p>
+        </article>
+        <article>
+          <h3>Kitchen</h3>
+          <p>Sage cabinets, a maple island, and a garden window. Pass through to the bath or back to the parlor.</p>
+        </article>
+        <article>
+          <h3>Bedroom</h3>
+          <p>A linen bed against the west wall, a reading lamp, and a quiet corner looking toward the living room.</p>
+        </article>
+        <article>
+          <h3>Bathroom</h3>
+          <p>Subway tile, a built-in tub, brass-toned fixtures. The last stop on the Willow Hall loop.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="closeout">
+      <h2>Ready to step inside?</h2>
+      <p>This is a self-contained demo. No accounts, API keys, or paid 3D services — just a static page and Three.js.</p>
+      <a class="btn btn-primary" href="tour.html">Enter the tour</a>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <p><strong>Lumenstep</strong> is an original demo name — not affiliated with any commercial 3D-tour product.</p>
+    <p>3D engine: <a href="https://threejs.org/" rel="noopener">Three.js</a> (MIT). Fonts: Fraunces &amp; Outfit via Google Fonts. Sample interiors are generated in-browser, not photographed scans.</p>
+  </footer>
+</body>
+</html>
