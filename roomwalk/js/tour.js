@@ -3,8 +3,11 @@
 
   const canvas = document.getElementById("view");
   const errorEl = document.getElementById("webgl-error");
-  if (!window.THREE || !canvas || !window.WebGLRenderingContext) {
+  function failTour() {
     if (errorEl) errorEl.hidden = false;
+  }
+  if (!window.THREE || !canvas) {
+    failTour();
     return;
   }
 
@@ -22,8 +25,9 @@
     living: {
       name: "Living Room",
       blurb: "Plaster hearth, linen sofa, oak floors.",
-      x: 4,
-      z: 4,
+      x: 4.2,
+      z: 3.2,
+      yaw: Math.PI - 0.55,
       links: [
         { to: "kitchen", x: 7.62, z: 4, label: "Kitchen" },
         { to: "bedroom", x: 4, z: 7.62, label: "Bedroom" }
@@ -32,8 +36,9 @@
     kitchen: {
       name: "Kitchen",
       blurb: "Sage cabinets and a maple island.",
-      x: 12,
-      z: 4,
+      x: 10.35,
+      z: 5.55,
+      yaw: -0.62,
       links: [
         { to: "living", x: 8.38, z: 4, label: "Living" },
         { to: "bathroom", x: 12, z: 7.62, label: "Bath" }
@@ -42,8 +47,9 @@
     bedroom: {
       name: "Bedroom",
       blurb: "A quiet west-facing sleeping room.",
-      x: 4,
-      z: 12,
+      x: 5.5,
+      z: 10.55,
+      yaw: 2.05,
       links: [
         { to: "living", x: 4, z: 8.38, label: "Living" },
         { to: "bathroom", x: 7.62, z: 12, label: "Bath" }
@@ -52,8 +58,9 @@
     bathroom: {
       name: "Bathroom",
       blurb: "Subway tile, tub, and brass notes.",
-      x: 12,
-      z: 12,
+      x: 12.2,
+      z: 10.9,
+      yaw: 2.48,
       links: [
         { to: "kitchen", x: 12, z: 8.38, label: "Kitchen" },
         { to: "bedroom", x: 8.38, z: 12, label: "Bedroom" }
@@ -74,12 +81,18 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const colliders = [];
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !coarse, powerPreference: "high-performance" });
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: !coarse, powerPreference: "high-performance" });
+  } catch (err) {
+    failTour();
+    return;
+  }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
+  renderer.toneMappingExposure = 1.18;
   renderer.shadowMap.enabled = !coarse;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -88,7 +101,7 @@
   scene.fog = new THREE.Fog(0xc9c2b4, 14, 28);
 
   const camera = new THREE.PerspectiveCamera(68, window.innerWidth / window.innerHeight, 0.08, 60);
-  camera.position.set(4.15, EYE, 3.25);
+  camera.position.set(ROOMS.living.x, EYE, ROOMS.living.z);
 
   const clock = new THREE.Clock();
   const house = new THREE.Group();
@@ -261,12 +274,8 @@
     g.position.set(x, y, z);
     g.rotation.y = rotY || 0;
     box(w + 0.1, h + 0.1, 0.06, trimMat, 0, 0, 0, g);
-    const glass = box(w, h, 0.02, new THREE.MeshStandardMaterial({
-      color: 0xa8c4d4,
-      roughness: 0.15,
-      metalness: 0.2,
-      emissive: 0x7ea3b5,
-      emissiveIntensity: 0.35
+    const glass = box(w, h, 0.02, new THREE.MeshBasicMaterial({
+      color: 0x9ec2d4
     }), 0, 0, 0.02, g);
     glass.castShadow = false;
     house.add(g);
@@ -415,7 +424,7 @@
   addCollider(13.1, 14.3, 8.25, 8.9);
   addCollider(14.4, 15.1, 11.9, 12.5);
 
-  scene.add(new THREE.HemisphereLight(0xfff3dd, 0x6a5a48, 0.55));
+  scene.add(new THREE.HemisphereLight(0xfff3dd, 0x6a5a48, 0.72));
   const sun = new THREE.DirectionalLight(0xffe6c2, 0.85);
   sun.position.set(2, 8, -4);
   sun.castShadow = !coarse;
@@ -436,13 +445,13 @@
     mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.06, 16), brassMat, x, WALL_H - 0.08, z);
   }
 
-  lamp(4, 4, 0xffd8a8, 1.15);
-  lamp(12, 4, 0xfff0d2, 1.2);
-  lamp(4, 12, 0xffcfa0, 0.95);
-  lamp(12, 12, 0xeef4ff, 1.05);
+  lamp(4, 4, 0xffd8a8, 1.35);
+  lamp(12, 4, 0xfff0d2, 1.4);
+  lamp(4, 12, 0xffcfa0, 1.2);
+  lamp(12, 12, 0xeef4ff, 1.25);
 
-  let yaw = 0.42;
-  let pitch = -0.06;
+  let yaw = ROOMS.living.yaw;
+  let pitch = -0.05;
   const keys = Object.create(null);
   const stick = { x: 0, z: 0 };
   let looking = false;
@@ -512,14 +521,8 @@
     veil.classList.add("on");
     const start = camera.position.clone();
     const end = new THREE.Vector3(room.x, EYE, room.z);
-    const look = new THREE.Vector3(room.x, EYE, room.z);
-    if (id === "living") look.set(4, EYE, 3.2);
-    if (id === "kitchen") look.set(13.2, EYE, 3.4);
-    if (id === "bedroom") look.set(3.2, EYE, 12);
-    if (id === "bathroom") look.set(12, EYE, 13);
     const startYaw = yaw;
-    let targetYaw = Math.atan2(-(look.x - end.x), -(look.z - end.z));
-    let dyaw = targetYaw - startYaw;
+    let dyaw = room.yaw - startYaw;
     while (dyaw > Math.PI) dyaw -= Math.PI * 2;
     while (dyaw < -Math.PI) dyaw += Math.PI * 2;
     tween = {
@@ -684,7 +687,7 @@
       const dx = item.link.x - cam.x;
       const dz = item.link.z - cam.z;
       const dist = Math.hypot(dx, dz);
-      const near = dist < 4.6 && (item.from === currentRoom || dist < 2.4);
+      const near = dist < 4.8 && item.from === currentRoom && item.link.to !== currentRoom;
       const p = project(item.link.x, 1.35, item.link.z);
       const show = near && p.visible;
       item.el.style.display = show ? "flex" : "none";
@@ -697,7 +700,7 @@
       const pin = item.pin;
       const dist = Math.hypot(pin.x - cam.x, pin.z - cam.z);
       const p = project(pin.x, pin.y, pin.z);
-      const show = dist < 3.8 && pin.room === currentRoom && p.visible;
+      const show = dist < 5.2 && pin.room === currentRoom && p.visible;
       item.el.style.display = show ? "block" : "none";
       if (show) {
         item.el.style.left = p.x + "px";
@@ -716,7 +719,11 @@
       yaw = tween.startYaw + (tween.targetYaw - tween.startYaw) * e;
       pitch = pitch * (1 - e * 0.4);
       applyLook();
-      if (u >= 1) tween = null;
+      if (u >= 1) {
+        const stuck = resolveMove(tween.end.x, tween.end.z);
+        camera.position.set(stuck.x, EYE, stuck.z);
+        tween = null;
+      }
     } else {
       let ix = stick.x;
       let iz = stick.z;
@@ -755,15 +762,10 @@
   });
 
   const hash = (window.location.hash || "").replace("#", "");
-  if (ROOMS[hash]) {
-    camera.position.set(ROOMS[hash].x, EYE, ROOMS[hash].z);
-    setRoomUi(hash);
-    if (hash === "kitchen") yaw = Math.PI * 0.15;
-    if (hash === "bedroom") yaw = Math.PI * 0.65;
-    if (hash === "bathroom") yaw = -Math.PI * 0.2;
-  } else {
-    setRoomUi("living");
-  }
+  const startRoom = ROOMS[hash] ? hash : "living";
+  camera.position.set(ROOMS[startRoom].x, EYE, ROOMS[startRoom].z);
+  yaw = ROOMS[startRoom].yaw;
+  setRoomUi(startRoom);
   applyLook();
   requestAnimationFrame(tick);
   window.setTimeout(() => document.getElementById("loader").classList.add("is-done"), 180);
