@@ -5,11 +5,25 @@ jobs:
     name: Build Jekyll
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Build the site in the jekyll/builder container
+      - uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Build the site with GitHub Pages Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - name: Assert roomwalk is copied as static HTML
         run: |
-          export JEKYLL_VERSION=3.8
-          docker run \
-          -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-          -e PAGES_REPO_NWO=${{ github.repository }} \
-          jekyll/builder:$JEKYLL_VERSION /bin/bash -c "chmod 777 /srv/jekyll && jekyll build --future"
+          set -euo pipefail
+          test -f _site/roomwalk/index.html
+          test -f _site/roomwalk/tour.html
+          test -f _site/roomwalk/css/landing.css
+          test -f _site/roomwalk/js/tour.js
+          test -f _site/roomwalk/vendor/three.min.js
+          head -c 20 _site/roomwalk/index.html | grep -F '<!DOCTYPE html>'
+          grep -q 'Lumenstep' _site/roomwalk/index.html
+          if grep -q 'Beautiful Jekyll' _site/roomwalk/index.html; then
+            echo 'roomwalk/index.html was wrapped in the site layout' >&2
+            exit 1
+          fi

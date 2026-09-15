@@ -43,7 +43,9 @@ Deep links into a room:
 
 ## GitHub Pages path (after merge)
 
-This repo is a Jekyll GitHub Pages site. `roomwalk/` is plain static files (no Liquid), so Jekyll copies it through.
+This repo is a Jekyll GitHub Pages site. `roomwalk/` is plain static files (no Liquid). `_config.yml` sets `layout: null` for this folder so the site-wide Beautiful Jekyll `layout: page` default does not wrap the demo. The folder is not excluded, so Jekyll copies it unchanged.
+
+Asset links are document-relative (`./css/…`, `./tour.html`, `./js/…`) so they resolve under the project Pages base path `/Techvolutions05.github.io/roomwalk/`.
 
 Once this branch is merged and Pages has rebuilt, the demo is at:
 
@@ -69,7 +71,7 @@ roomwalk/
   README.md
 ```
 
-This folder is isolated from the rest of the Jekyll theme. It does not change posts, layouts, or site config.
+This folder is isolated from the rest of the Jekyll theme. It does not change posts or layouts. Site config only adds a `roomwalk` defaults scope (`layout: null`) so the blog theme is not applied here.
 
 ## Credits
 
