@@ -1,0 +1,24 @@
+# GitHub Pages for this repo is still on the legacy project-site source:
+# branch gh-pages / folder /. That branch is missing, so master never
+# publishes (last successful Pages build is from 2020). Mirror master onto
+# gh-pages after each merge so /roomwalk/ is actually built and served.
+# Site-wide .nojekyll is intentionally not used — the Jekyll blog stays intact.
+name: Publish GitHub Pages source
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  mirror-master-to-gh-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Mirror this commit to gh-pages
+        run: |
+          git push origin HEAD:gh-pages --force
