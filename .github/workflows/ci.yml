@@ -27,3 +27,17 @@ jobs:
             echo 'roomwalk/index.html was wrapped in the site layout' >&2
             exit 1
           fi
+      - name: Assert searchanchor Flutter SPA is copied unwrapped
+        run: |
+          set -euo pipefail
+          test -f _site/searchanchor/index.html
+          test -f _site/searchanchor/flutter_bootstrap.js
+          test -f _site/searchanchor/main.dart.js
+          test ! -e _site/searchanchor/app
+          head -c 20 _site/searchanchor/index.html | grep -F '<!DOCTYPE html>'
+          grep -q 'SearchAnchor Studio' _site/searchanchor/index.html
+          grep -q 'base href="/Techvolutions05.github.io/searchanchor/"' _site/searchanchor/index.html
+          if grep -q 'Beautiful Jekyll' _site/searchanchor/index.html; then
+            echo 'searchanchor/index.html was wrapped in the site layout' >&2
+            exit 1
+          fi

@@ -202,6 +202,13 @@ defaults:
       path: "roomwalk"
     values:
       layout: null
+  # SearchAnchor Studio is a Flutter web SPA. Same rule: do not wrap it in
+  # Beautiful Jekyll, and do not add searchanchor/ to exclude.
+  -
+    scope:
+      path: "searchanchor"
+    values:
+      layout: null
 
 # Exclude these files from production site
 exclude:
@@ -213,6 +220,9 @@ exclude:
   - README.md
   - screenshot.png
   - docs/
+  # Flutter source for SearchAnchor Studio. The built web app stays in
+  # searchanchor/ (index.html + assets) and is copied to the site.
+  - searchanchor/app
 
 plugins:
   - jekyll-paginate

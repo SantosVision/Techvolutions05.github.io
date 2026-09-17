@@ -38,6 +38,9 @@ Dockerfile text eol=lf
 *.exe binary
 *.data binary
 *.ttf binary
+*.otf binary
+*.wasm binary
+*.bin binary
 *.eof binary
 *.eot binary
 *.swf binary

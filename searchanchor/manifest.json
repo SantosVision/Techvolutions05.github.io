@@ -1,0 +1,35 @@
+{
+    "name": "SearchAnchor Studio",
+    "short_name": "SearchAnchor",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#2B6CEE",
+    "theme_color": "#2B6CEE",
+    "description": "Material 3 SearchBar + SearchAnchor type-ahead over a hardcoded Material widget catalog.",
+    "orientation": "any",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
